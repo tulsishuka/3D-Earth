@@ -1,42 +1,31 @@
 
+import Footer from '@/components/Footer'
+import About from '@/components/sections/About'
+import Hero from '@/components/sections/Hero'
+import Research from '@/components/sections/Research'
+import Study from '@/components/sections/Study'
+import Technology from '@/components/sections/Technology'
 
-"use client";
-
-import { useEffect } from "react";
-import initPlanet3D from "@/components/3D/planet";
-
-export default function Home() {
-  useEffect(() => {
-    const { renderer, destroy } = initPlanet3D();
-
-    return () => {
-      destroy();
-
-      const gl = renderer.getContext();
-
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
-
-      renderer.dispose();
-    };
-  }, []);
-
+const page = () => {
   return (
-    <main className="page">
-      <section className="hero_main">
-        <div className="content">
-          <h1>The Future Is Biological</h1>
+    <>
+    <main className="bg-[#020617]">
 
-          <p>
-            Where biotechnology, intelligence, and innovation converge to shape a healthier, smarter future.
-          </p>
+      <Hero />
 
-          <button className="cta_btn">
-            Get started.
-          </button>
-        </div>
+      <About />
+  <Technology />
+    <Research />
+  <Study/>
+  
 
-        <canvas className="planet-3D" />
-      </section>
+    
+
+      <Footer />
+
     </main>
-  );
+    </>
+  )
 }
+
+export default page
