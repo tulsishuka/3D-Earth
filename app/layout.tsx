@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-
+import "./globals.css";
 import localFont from "next/font/local";
+import Navbar from "@/components/Navbar";
 
-import "../styles/main.css";
+// import "../styles/main.css";
 
 const inter = localFont({
   src: [
@@ -70,9 +71,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${appleGaramond.variable}`}>
-        {children}
-      </body>
+     <body className={`${inter.variable} ${appleGaramond.variable}`}>
+  <Navbar />
+  {children}
+</body>
     </html>
   );
 }
