@@ -24,11 +24,10 @@ export default function Home() {
     <main className="page">
       <section className="hero_main">
         <div className="content">
-          <h1>Welcome To The New World</h1>
+          <h1>The Future Is Biological</h1>
 
           <p>
-            AI agents that actually bring value to businesses
-            and elevate workers productivity.
+            Where biotechnology, intelligence, and innovation converge to shape a healthier, smarter future.
           </p>
 
           <button className="cta_btn">
