@@ -11,9 +11,6 @@ type Planet3D = {
 };
 
 const initPlanet3D = (): Planet3D => {
-  // ==========================================
-  // CANVAS
-  // ==========================================
 
   const canvas = document.querySelector(
     "canvas.planet-3D"
@@ -25,15 +22,8 @@ const initPlanet3D = (): Planet3D => {
     );
   }
 
-  // ==========================================
-  // SCENE
-  // ==========================================
 
   const scene = new THREE.Scene();
-
-  // ==========================================
-  // SIZE
-  // ==========================================
 
   const size = {
     width: window.innerWidth,
@@ -44,9 +34,6 @@ const initPlanet3D = (): Planet3D => {
     ),
   };
 
-  // ==========================================
-  // CAMERA
-  // ==========================================
 
   const camera =
     new THREE.PerspectiveCamera(
@@ -64,10 +51,7 @@ const initPlanet3D = (): Planet3D => {
 
   scene.add(camera);
 
-  // ==========================================
-  // RENDERER
-  // ==========================================
-
+ 
   const renderer =
     new THREE.WebGLRenderer({
       canvas,
@@ -92,13 +76,8 @@ const initPlanet3D = (): Planet3D => {
   renderer.outputColorSpace =
     THREE.SRGBColorSpace;
 
-  // ==========================================
-  // PARTICLE SETTINGS
-  // ==========================================
-
   const particleCount = 1400;
 
-  // Full screen 3D space
 
   const fieldWidth = 13;
 
@@ -106,9 +85,6 @@ const initPlanet3D = (): Planet3D => {
 
   const fieldDepth = 6;
 
-  // ==========================================
-  // POSITION ARRAYS
-  // ==========================================
 
   const positions =
     new Float32Array(
@@ -130,9 +106,6 @@ const initPlanet3D = (): Planet3D => {
       particleCount * 3
     );
 
-  // ==========================================
-  // COLORS
-  // ==========================================
 
   const colors =
     new Float32Array(
@@ -157,20 +130,13 @@ const initPlanet3D = (): Planet3D => {
   const particleColor =
     new THREE.Color();
 
-  // ==========================================
-  // CREATE PARTICLES
-  // ==========================================
-
+ 
   for (
     let i = 0;
     i < particleCount;
     i++
   ) {
     const i3 = i * 3;
-
-    // ------------------------------------------
-    // FULL SCREEN INITIAL POSITION
-    // ------------------------------------------
 
     const x =
       (Math.random() - 0.5) *
@@ -199,10 +165,7 @@ const initPlanet3D = (): Planet3D => {
     initialPositions[i3 + 2] =
       z;
 
-    // ------------------------------------------
-    // MOLECULAR POSITION
-    // ------------------------------------------
-
+  
     const phi =
       Math.acos(
         2 * Math.random() - 1
@@ -241,9 +204,6 @@ const initPlanet3D = (): Planet3D => {
     molecularPositions[i3 + 2] =
       mz;
 
-    // ------------------------------------------
-    // FINAL POSITION
-    // ------------------------------------------
 
     const direction =
       new THREE.Vector3(
@@ -271,10 +231,6 @@ const initPlanet3D = (): Planet3D => {
       z +
       direction.z *
       finalDistance;
-
-    // ------------------------------------------
-    // RANDOM COLOR
-    // ------------------------------------------
 
     const random =
       Math.random();
@@ -305,10 +261,6 @@ const initPlanet3D = (): Planet3D => {
       particleColor.b;
   }
 
-  // ==========================================
-  // PARTICLE GEOMETRY
-  // ==========================================
-
   const geometry =
     new THREE.BufferGeometry();
 
@@ -328,10 +280,6 @@ const initPlanet3D = (): Planet3D => {
     )
   );
 
-  // ==========================================
-  // PARTICLE MATERIAL
-  // ==========================================
-
   const material =
     new THREE.PointsMaterial({
       size: 0.055,
@@ -344,10 +292,6 @@ const initPlanet3D = (): Planet3D => {
       depthWrite: false,
     });
 
-  // ==========================================
-  // PARTICLE SYSTEM
-  // ==========================================
-
   const particles =
     new THREE.Points(
       geometry,
@@ -357,10 +301,6 @@ const initPlanet3D = (): Planet3D => {
   scene.add(
     particles
   );
-
-  // ==========================================
-  // MOLECULAR CONNECTIONS
-  // ==========================================
 
   const connectionDistance =
     0.55;
@@ -432,10 +372,7 @@ const initPlanet3D = (): Planet3D => {
     }
   }
 
-  // ==========================================
-  // CONNECTION GEOMETRY
-  // ==========================================
-
+ 
   const connectionGeometry =
     new THREE.BufferGeometry();
 
@@ -447,10 +384,7 @@ const initPlanet3D = (): Planet3D => {
     )
   );
 
-  // ==========================================
-  // CONNECTION MATERIAL
-  // ==========================================
-
+ 
   const connectionMaterial =
     new THREE.LineBasicMaterial({
       color: 0x4ccfff,
@@ -461,10 +395,7 @@ const initPlanet3D = (): Planet3D => {
       depthWrite: false,
     });
 
-  // ==========================================
-  // CONNECTIONS
-  // ==========================================
-
+ 
   const connections =
     new THREE.LineSegments(
       connectionGeometry,
@@ -474,10 +405,6 @@ const initPlanet3D = (): Planet3D => {
   scene.add(
     connections
   );
-
-  // ==========================================
-  // MOLECULAR GROUP
-  // ==========================================
 
   const molecularGroup =
     new THREE.Group();
@@ -494,18 +421,12 @@ const initPlanet3D = (): Planet3D => {
     molecularGroup
   );
 
-  // ==========================================
-  // SCROLL STATE
-  // ==========================================
-
+ 
   const scrollState = {
     progress: 0,
   };
 
-  // ==========================================
-  // SCROLL TRIGGER
-  // ==========================================
-
+ 
   const scrollTrigger =
     ScrollTrigger.create({
       trigger:
@@ -529,20 +450,14 @@ const initPlanet3D = (): Planet3D => {
       },
     });
 
-  // ==========================================
-  // ANIMATION
-  // ==========================================
-
+  
   const animate = (
     time: number
   ) => {
     const progress =
       scrollState.progress;
 
-    // ------------------------------------------
-    // ROTATION
-    // ------------------------------------------
-
+   
     molecularGroup.rotation.y =
       time * 0.05;
 
@@ -550,10 +465,6 @@ const initPlanet3D = (): Planet3D => {
       Math.sin(
         time * 0.15
       ) * 0.03;
-
-    // ------------------------------------------
-    // PARTICLE POSITIONS
-    // ------------------------------------------
 
     const positionAttribute =
       geometry.attributes
@@ -570,11 +481,7 @@ const initPlanet3D = (): Planet3D => {
       let y: number;
       let z: number;
 
-      // ----------------------------------------
-      // PHASE 1
-      // FULL SCREEN
-      // ----------------------------------------
-
+      
       if (
         progress < 0.45
       ) {
@@ -611,11 +518,7 @@ const initPlanet3D = (): Planet3D => {
           );
       }
 
-      // ----------------------------------------
-      // PHASE 2
-      // MOLECULAR SPHERE
-      // ----------------------------------------
-
+     
       else if (
         progress < 0.7
       ) {
@@ -629,11 +532,7 @@ const initPlanet3D = (): Planet3D => {
           molecularPositions[i3 + 2];
       }
 
-      // ----------------------------------------
-      // PHASE 3
-      // EXPLOSION
-      // ----------------------------------------
-
+     
       else {
         const phase =
           (progress - 0.7) /
@@ -679,10 +578,7 @@ const initPlanet3D = (): Planet3D => {
     positionAttribute.needsUpdate =
       true;
 
-    // ------------------------------------------
-    // CONNECTION VISIBILITY
-    // ------------------------------------------
-
+  
     if (
       progress < 0.45
     ) {
@@ -711,9 +607,7 @@ const initPlanet3D = (): Planet3D => {
         (1 - phase);
     }
 
-    // ------------------------------------------
-    // PARTICLE OPACITY
-    // ------------------------------------------
+   
 
     material.opacity =
       THREE.MathUtils.lerp(
@@ -721,10 +615,6 @@ const initPlanet3D = (): Planet3D => {
         0.95,
         progress
       );
-
-    // ------------------------------------------
-    // RENDER
-    // ------------------------------------------
 
     renderer.render(
       scene,
@@ -739,10 +629,6 @@ const initPlanet3D = (): Planet3D => {
   gsap.ticker.lagSmoothing(
     0
   );
-
-  // ==========================================
-  // RESIZE
-  // ==========================================
 
   const handleResize =
     () => {
@@ -779,10 +665,7 @@ const initPlanet3D = (): Planet3D => {
     handleResize
   );
 
-  // ==========================================
-  // CLEANUP
-  // ==========================================
-
+  
   const destroy = () => {
     gsap.ticker.remove(
       animate
@@ -807,10 +690,6 @@ const initPlanet3D = (): Planet3D => {
       molecularGroup
     );
   };
-
-  // ==========================================
-  // RETURN
-  // ==========================================
 
   return {
     scene,
